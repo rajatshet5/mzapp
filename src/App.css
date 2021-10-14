@@ -1,0 +1,9 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  /* width: 98%; */
+  margin: auto;
+  /* overflow-x: hidden; */
+  background-color: #0a0e18;
+  scroll-behavior: smooth;
+}

@@ -8,23 +8,26 @@ function App() {
   const [suggestions, setSuggestions] = useState([]);
   const [imagesArr, setImagesArr] = useState([]);
   const [q, setQ] = useState("");
-  const [loading, setLoading] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [searchLoading, setSearchLoading] = useState(false);
   useEffect(() => {
     axios.get(`https://unsplash.com/nautocomplete/${q}`)
       .then((res) => {
         console.log(res.data);
         setSuggestions(res.data.autocomplete);
-        setLoading(false);
       })
       .catch((err) => {
         alert(err);
       })
-  }, [q]);
-  const getImages = () => {
-    axios.get(`https://api.unsplash.com/search/photos?per_page=1000&query=${q}&client_id=tKLhuJkmPl6kmr0aOuiwZ2btcvms9kKX-sQFKpmc75k`)
+    }, [q]);
+    const getImages = () => {
+      setSearchLoading(true);
+      axios.get(`https://api.unsplash.com/search/photos?page=10&per_page=10&query=${q}&client_id=tKLhuJkmPl6kmr0aOuiwZ2btcvms9kKX-sQFKpmc75k`)
       .then((res) => {
         console.log(res.data.results);
         setImagesArr(res.data.results);
+        setSearchLoading(false);
+        window.scrollTo(0, 0);
       })
       .catch((err) => {
         alert(err);
@@ -40,7 +43,7 @@ function App() {
         getImages={getImages}
         q={q}
       />
-      <Gallery images={imagesArr}/>
+      <Gallery searchLoading={searchLoading} setSearchLoading={setSearchLoading} images={imagesArr}/>
     </div>
   );
 }
