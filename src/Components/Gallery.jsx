@@ -1,4 +1,5 @@
 import { Grid, makeStyles } from "@material-ui/core";
+import { useEffect } from "react";
 import styled from "styled-components";
 
 
@@ -33,6 +34,45 @@ const Spinner = styled.div`
 }
 `;
 
+
+const MoreLoading = styled.div`
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 19px auto;
+  div {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  width: 16px;
+  background: #fff;
+  animation: moreLoading 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+  }
+  & :nth-child(1) {
+  left: 8px;
+  animation-delay: -0.24s;
+}
+& :nth-child(2) {
+  left: 32px;
+  animation-delay: -0.12s;
+}
+& :nth-child(3) {
+  left: 56px;
+  animation-delay: 0;
+}
+@keyframes moreLoading {
+  0% {
+    top: 8px;
+    height: 64px;
+  }
+  50%, 100% {
+    top: 24px;
+    height: 32px;
+  }
+}
+`;
+
 const useStyles = makeStyles({
     container: {
         display: "flex",
@@ -46,9 +86,10 @@ const useStyles = makeStyles({
     }
 })
 
-export function Gallery({ images, searchLoading }) {
+export function Gallery({ images, searchLoading, moreLoading }) {
     const classes = useStyles();
     return (
+        <>
         <GalleryCont>
             {!searchLoading ? <Grid className={classes.container} container spacing={8}>
                 {images.map(item => (
@@ -62,6 +103,13 @@ export function Gallery({ images, searchLoading }) {
                         <Spinner></Spinner>
                     </SpinnerCont>
             )}
-        </GalleryCont>
+            </GalleryCont>
+            {moreLoading && <MoreLoading class="lds-facebook">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </MoreLoading>
+            }
+        </>
     )
 }

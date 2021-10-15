@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { useRef } from "react";
 import styled from "styled-components";
 
-
-
 const Container = styled.div`
 min-height: 21vh;
 /* border:1px solid red; */
@@ -40,7 +38,7 @@ outline: 0;
 font-size: 23px;
 /* border: 1px solid red; */
 width: 89%;
-background-color:  #0a0e18;
+background-color:#0a0e18;
 color: white;
 `;
 const SuggestionsBox = styled.div`
@@ -99,8 +97,8 @@ cursor: pointer;
 color: white;
 `;
 
-export function NavBar({ suggestions, onChange, loading, setLoading, getImages, q }) {
-    console.log(suggestions);
+export function NavBar({ suggestions, onChange, loading, setLoading, getImages}) {
+    // console.log(suggestions);
     const [query, setQuery] = useState("");
     const [active, setActive] = useState();
     const [hideSuggestionsBox, setHideSuggestionsBox] = useState(false);
@@ -125,7 +123,7 @@ export function NavBar({ suggestions, onChange, loading, setLoading, getImages, 
         let timer;
         console.log("inDB", timer);
         return () => {
-            console.log("start",timer);
+            console.log("start",timer, query);
             clearTimeout(timer);
             timer = setTimeout(() => {
                 func();
