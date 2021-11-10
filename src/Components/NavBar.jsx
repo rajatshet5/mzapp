@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useRef } from "react";
 import styled from "styled-components";
+import { v4 as uuid } from 'uuid';
+
 
 const Container = styled.div`
 min-height: 21vh;
@@ -16,9 +18,11 @@ padding: 15px ;
 padding-bottom: 29px;
 background-color:  #0a0e18;
 width: 97%;
+display: flex;
+justify-content: start;
 `;
 const Wrapper = styled.div`
-width: 43%;
+width: 56%;
 border: 1px solid grey;
 border-radius: 35px;
 height: 49px;
@@ -38,7 +42,7 @@ outline: 0;
 font-size: 23px;
 /* border: 1px solid red; */
 width: 89%;
-background-color:#0a0e18;
+background-color:#0a0e18 !important;
 color: white;
 `;
 const SuggestionsBox = styled.div`
@@ -47,10 +51,10 @@ flex-direction: column;
 max-height: 580px;
 overflow: auto;
 position: absolute;
-left:28.3%;
+left:25.6%;
 border:1px solid black;
 background-color: #0a0e18;
-width: 43%;
+width: 56%;
 padding: 8px;
 margin: auto;
 border-bottom-left-radius: 23px;
@@ -109,7 +113,7 @@ export function NavBar({ suggestions, onChange, loading, setLoading, getImages})
     useEffect(() => {
         debounceRef.current = debounce(reqFn, 500);
         window.addEventListener("click", function (e) {
-            console.log(e.target);
+            // console.log(e.target);
             if (e.target.id !== "inpBox" && e.target.id !== "sugBox") {
                 setHideSuggestionsBox(true);
             } 
@@ -121,14 +125,14 @@ export function NavBar({ suggestions, onChange, loading, setLoading, getImages})
     }
     const debounce = (func, delay) => {
         let timer;
-        console.log("inDB", timer);
+        // console.log("inDB", timer);
         return () => {
-            console.log("start",timer, query);
+            // console.log("start",timer, query);
             clearTimeout(timer);
             timer = setTimeout(() => {
                 func();
             }, delay);
-            console.log("end",timer);
+            // console.log("end",timer);
         }
     }
     // let tref;
@@ -145,14 +149,22 @@ export function NavBar({ suggestions, onChange, loading, setLoading, getImages})
     const handleKeyPress = (e) => {
         switch (e.keyCode) {
             case 38:
-                setActive(prev => prev - 1)
+                if (active === 0) {
+                    setActive(5);
+                } else {
+                    setActive(prev => prev - 1)
+                }
                 break;
             case 40:
-                if (hideSuggestionsBox) setHideSuggestionsBox(false);
-                if (!active) {
+                if (active === 6) {
                     setActive(1);
                 } else {
-                    setActive(prev => prev + 1);
+                    if (hideSuggestionsBox) setHideSuggestionsBox(false);
+                    if (!active) {
+                        setActive(1);
+                    } else {
+                        setActive(prev => prev + 1);
+                    }
                 }
                 break;
             case 13:
@@ -162,7 +174,7 @@ export function NavBar({ suggestions, onChange, loading, setLoading, getImages})
             }
         }
     const getResults = () => {
-        console.log(active);
+        // console.log(active);
         setHideSuggestionsBox(true);
         if (active !== undefined) {
             setQuery(suggestions[active - 1]?.query);
@@ -186,6 +198,7 @@ export function NavBar({ suggestions, onChange, loading, setLoading, getImages})
     return (
         <Container>
             <WrapperContainer>
+                <img onClick={() => window.scrollTo(0, 0)} style={{padding:"0",cursor:"pointer", width:"139px", marginTop:"10px"}} src="/logo.png" alt="logo"/>
             <Wrapper onKeyDown={handleKeyPress}>
                 <InpBox id="inpBox" value={query} onChange={handleInputChange} ref={inpRef} />
                 <Clear onClick={handleClear}>X</Clear>
@@ -196,7 +209,7 @@ export function NavBar({ suggestions, onChange, loading, setLoading, getImages})
                 <SuggestionsBox id="sugBox" active={active} len={suggestions.length}>
                     {
                         suggestions.map((item, index) => (
-                            <div onClick={getResults} onMouseOver={() => setActive(index + 1)}>{item.query}</div>
+                            <div key={uuid()} onClick={getResults} onMouseOver={() => setActive(index + 1)}>{item.query}</div>
                         ))
                     }
                 </SuggestionsBox>
