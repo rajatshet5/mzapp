@@ -15,6 +15,7 @@ function App() {
   const throttleRef = useRef();
   const imagesArrRef = useRef([]);
   const pageRef = useRef(1);
+  const clientId = process.env.REACT_APP_CLIENT_ID;
 
   useEffect(() => {
     throttleRef.current = throttle(checkPos, 700);
@@ -36,7 +37,7 @@ function App() {
   const getImages = () => {
     pageRef.current = 1;
       setSearchLoading(true);
-      axios.get(`https://api.unsplash.com/search/photos?page=1&per_page=28&query=${q}&client_id=tKLhuJkmPl6kmr0aOuiwZ2btcvms9kKX-sQFKpmc75k`)
+      axios.get(`https://api.unsplash.com/search/photos?page=1&per_page=28&query=${q}&client_id=${clientId}`)
       .then((res) => {
         // console.log(res.data.results);
         setImagesArr(res.data.results);
