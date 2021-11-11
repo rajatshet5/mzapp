@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { v4 as uuid } from 'uuid';
 
 
+
 const Image = styled.img`
 width: 100%;
 border-radius: 5px;
@@ -38,7 +39,6 @@ const Spinner = styled.div`
   100% { transform: rotate(360deg); }
 }
 `;
-
 
 const MoreLoading = styled.div`
   display: inline-block;
@@ -85,7 +85,6 @@ align-items: center;
 justify-content: center;
 /* border: 3px solid white; */
 `;
-
 const useStyles = makeStyles({
     container: {
         display: "flex",
@@ -98,6 +97,7 @@ const useStyles = makeStyles({
         height: "503px"
     }
 })
+
 
 export function Gallery({ images, searchLoading, moreLoading }) {
     const classes = useStyles();
