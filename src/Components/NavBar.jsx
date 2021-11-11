@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { v4 as uuid } from 'uuid';
 
 
+
 const Container = styled.div`
 min-height: 21vh;
 /* border:1px solid red; */
@@ -101,6 +102,8 @@ font-size: 23px;
 cursor: pointer;
 color: white;
 `;
+
+
 
 export function NavBar({ suggestions, onChange, loading, setLoading, getImages}) {
     // console.log(suggestions);
