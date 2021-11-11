@@ -66,6 +66,7 @@ div {
     background-color: rgb(25,33,51);
     border-radius: 3px;
     font-size: 25px;
+    cursor: pointer;
     display: flex;
     align-items: center;
     color: white;
