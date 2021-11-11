@@ -145,7 +145,6 @@ export function NavBar({ suggestions, onChange, loading, setLoading, getImages})
     //         console.log("end",tref);
     // }
 
-
     const handleKeyPress = (e) => {
         switch (e.keyCode) {
             case 38:
@@ -173,6 +172,7 @@ export function NavBar({ suggestions, onChange, loading, setLoading, getImages})
             default: return;   
             }
         }
+        
     const getResults = () => {
         // console.log(active);
         setHideSuggestionsBox(true);
